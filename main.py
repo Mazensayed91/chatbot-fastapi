@@ -17,6 +17,17 @@ root_router = APIRouter()
 app = FastAPI(title="Chatbot API", openapi_url=f"{settings.API_V1_STR}/openapi.json")
 
 
+@root_router.get("/", status_code=200)
+def root(
+    request: Request,
+    db: Session = Depends(deps.get_db),
+) -> dict:
+    """
+    Root GET
+    """
+    return {"request": "hello chatbot"}
+
+
 @app.middleware("http")
 async def add_process_time_header(request: Request, call_next):
     start_time = time.time()
